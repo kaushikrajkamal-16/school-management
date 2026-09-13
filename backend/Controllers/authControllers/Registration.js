@@ -61,6 +61,7 @@ const Registration = async (req, res) => {
       email,
       password,
       role: role || "student",
+      isApproved: role === "admin" ? true : false,
       emailverifyotp,
       emailverifyotpExpiry: Date.now() + 24 * 10 * 1000,
     });
