@@ -1,10 +1,8 @@
 const User = require("../../models/user");
 
 const getMe = async (req, res) => {
-  const { _id } = req.user;
-
   try {
-    const user = await User.findOne({ _id: _id });
+    const user = req.user;
 
     return res.status(200).json({
       success: true,

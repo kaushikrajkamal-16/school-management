@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const User = require("./../models/user");
 
 const authMiddleware = async (req, res, next) => {
   try {
@@ -18,10 +19,11 @@ const authMiddleware = async (req, res, next) => {
       process.env.JWT_SEC || "your_fallback_secret_key",
     );
 
-    // 3. Attach decoded token data (_id, email, etc.) to the request object
-    req.user = decoded;
+    const user = await User.findById(decoded._id);
 
-    // 4. Pass execution to the route controller (e.g., getMe)
+    req.user = user;
+
+    console.log(req.user);
     next();
   } catch (error) {
     console.error("Auth Middleware Error:", error.message);
