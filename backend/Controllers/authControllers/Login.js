@@ -26,7 +26,7 @@ const login = async (req, res) => {
       "+password",
     );
 
-    console.log(user);
+    // console.log(user);
 
     if (!user) {
       return res.status(400).json({
@@ -44,8 +44,11 @@ const login = async (req, res) => {
 
     const isMatchPass = await user.ComparePassword(password);
 
+    // console.log(isMatchPass);
+
     if (!isMatchPass) {
       return res.status(400).json({
+        isMatchPass: isMatchPass,
         success: false,
         message: "Password is incorrect",
       });
@@ -57,8 +60,6 @@ const login = async (req, res) => {
     });
 
     res.cookie("accessToken", accessToken, { maxAge: 24 * 60 * 60 * 1000 });
-
-    user.password = undefined;
 
     return res.status(200).json({
       success: true,
